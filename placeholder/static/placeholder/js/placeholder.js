@@ -67,7 +67,7 @@ function list_placeholder(element, recursive) {
         }
 
         $.getScript("/static/placeholder/js/jquery.hotkeys.js", function () {
-            $(document).bind('keyup', 'ctrl+shift+e', function(){
+            $(document).bind('keyup', 'ctrl+e', function(){
                 if (confirm("Carregar edição de conteúdo ?"))
                 {
                     var credentials = prompt("Usuário/Senha");
