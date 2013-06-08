@@ -26,7 +26,7 @@ class Placeholder(Tag):
             'model_attribute': model_attribute,
             'model_pk': model_object.pk
         })
-        value = u"<!--django:placeholder:%s-->%s<!--/nscms:placeholder-->" % \
+        value = u"<!--django:placeholder:%s-->%s<!--/django:placeholder-->" % \
             (meta, value)
         return value
 
