@@ -70,7 +70,7 @@ function list_placeholder(element, recursive) {
             $(document).bind('keyup', 'ctrl+e', function(){
                 if (confirm("Carregar edição de conteúdo ?"))
                 {
-                    var credentials = prompt("Usuário/Senha");
+//                    var credentials = prompt("Usuário/Senha");
                     placeholders_init();
                 }
             });

@@ -7,6 +7,5 @@ from .views import placeholder_save
 
 
 urlpatterns = patterns('',
-    url(r'^placeholder/save/$', placeholder_save, name="placeholder_save"),
+    url(r'^save/$', placeholder_save, name="placeholder_save"),
 )
-
