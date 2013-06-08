@@ -43,6 +43,9 @@ class PlaceholderInstance(Tag):
     )
 
     def render_tag(self, context, model_object, nodelist):
+        if model_object is None:
+            return ""
+
         meta = dumps({
             'app_label': model_object._meta.app_label,
             'model_name': model_object.__class__.__name__,
