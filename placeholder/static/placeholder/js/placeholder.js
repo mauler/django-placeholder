@@ -100,6 +100,7 @@ function list_placeholder_objects(element, recursive) {
                 var meta = jQuery.parseJSON(this.data.slice(len))
                 var nodeinstancedata = this.previousSibling.data;
                 var $this = $(this)
+                var $previous = $(this.previousSibling)
                 var $element = $this.next();
                 var $button = $('<a title="Placeholder" class="fancybox placeholder" data-fancybox-type="iframe">✎</a>');
                 $button.attr({
@@ -111,17 +112,13 @@ function list_placeholder_objects(element, recursive) {
                 $button.fancybox({
                     afterClose: function () {
                         $.get(location.href, function (source) {
-//                            $element.remove();
                             source = source.split("<!--" + nodeinstancedata + "-->")[1];
                             source = source.split("<!--/" + nodeinstancedata + "-->")[0];
-                            $element.remove();
                             $this.next().remove();
-                            $this.after(source);
                             $this.remove();
+                            $previous.after(source);
                         });
-//                        alert(666);
                     }
-//                    helpers: {title: {type: 'over'}}
                 });
             })
 
@@ -142,7 +139,6 @@ function list_placeholder_objects(element, recursive) {
                 $button.fancybox({
                     afterClose: function () {
                         $.get(location.href, function (source) {
-//                            $element.remove();
                             source = source.split("<!--" + nodeobjectsdata + "-->")[1];
                             source = source.split("<!--/placeholder:objects-->")[0];
                             $element.remove();
@@ -150,12 +146,9 @@ function list_placeholder_objects(element, recursive) {
                             $this.after(source);
                             $this.remove();
                         });
-//                        alert(666);
                     }
-//                    helpers: {title: {type: 'over'}}
                 });
             })
-//            $(".fancybox").fancybox();
         }
 
         $.getScript("/static/placeholder/js/jquery.hotkeys.js", function () {
