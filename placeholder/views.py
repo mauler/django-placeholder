@@ -14,4 +14,3 @@ def placeholder_save(request):
     setattr(obj, request.POST['model_attribute'], request.POST['value'])
     obj.save()
     return HttpResponse()
-

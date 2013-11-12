@@ -90,7 +90,7 @@ function list_placeholder_objects(element, recursive) {
                         }
                 }
                 $this.bind("blur", function ()  {
-                    change()
+                    change();
                 })
             })
 
