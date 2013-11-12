@@ -52,15 +52,17 @@ class PlaceholderInstance(Tag):
             'model_pk': model_object.pk
         })
         output = nodelist.render(context)
-        output = \
-            (
-                u"<!--placeholder:instance:{model_name}:{pk}-->"  \
-                u"<!--placeholder:instance:meta:{meta}-->" \
-                u"{output}" \
-                u"<!--/placeholder:instance:meta-->" \
-                u"<!--/placeholder:instance:{model_name}:{pk}-->").format(
-                    pk=model_object.pk, meta=meta,
-                    model_name=model_object.__class__.__name__, output=output)
+        source = \
+            u"<!--placeholder:instance:{model_name}:{pk}-->"  \
+            u"<!--placeholder:instance:meta:{meta}-->" \
+            u"{output}" \
+            u"<!--/placeholder:instance:meta-->" \
+            u"<!--/placeholder:instance:{model_name}:{pk}-->"
+        output = source.format(
+            pk=model_object.pk,
+            meta=meta,
+            model_name=model_object.__class__.__name__,
+            output=output)
         return output
 
 register.tag(PlaceholderInstance)
@@ -69,23 +71,23 @@ register.tag(PlaceholderInstance)
 class PlaceholderObjects(Tag):
     name = 'placeholder_objects'
     options = Options(
-        Argument('app_label', required=True),
-        Argument('model_name', required=True),
+        Argument('queryset', required=True),
         blocks=[('endplaceholder_objects', 'nodelist', )],
     )
 
-    def render_tag(self, context, app_label, model_name, nodelist):
+    def render_tag(self, context, queryset, nodelist):
         meta = dumps({
-            'app_label': app_label,
-            'model_name': model_name,
+            'app_label': queryset.model._meta.app_label,
+            'model_name': queryset.model.__class__.__name__,
         })
         output = nodelist.render(context)
-        output = \
-            (
-                u"<!--placeholder:objects:meta:{meta}-->" \
-                u"{output}" \
-                u"<!--/placeholder:objects:meta-->").format(
-                    meta=meta, output=output)
+        source = \
+            u"<!--placeholder:objects:meta:{meta}-->" \
+            u"{output}" \
+            u"<!--/placeholder:objects:meta-->"
+        output = source.format(
+            meta=meta,
+            output=output)
         return output
 
 register.tag(PlaceholderObjects)
