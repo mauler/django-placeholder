@@ -63,6 +63,7 @@ function list_placeholder_objects(element, recursive) {
 (function ($) {
     $(function () {
         var placeholders_init = function () {
+
             $.each(list_placeholder_text(document.body), function () {
                 var len = PLACEHOLDER_TEXT_NODE_DATA_PREFIX.length
                 var ph_node = this
@@ -93,6 +94,22 @@ function list_placeholder_objects(element, recursive) {
                     change();
                 })
             })
+
+            Aloha.jQuery("[data-placeholder-richtext]").aloha();
+
+            Aloha.bind('aloha-editable-deactivated', function (params) {
+                var content = Aloha.activeEditable.getContents();
+                var container = Aloha.activeEditable.obj[0];
+                var json = $(container).attr("data-placeholder-meta");
+                var meta = JSON.parse(json);
+                if (confirm("Salvar as alterações neste texto ?")) {
+                    meta['value'] = content;
+                    $.post("/placeholder/save/", meta, function () {
+                        alert("Texto alterado com sucesso.")
+                        original_text = meta['value']
+                    })
+                }
+            });
 
             $.each(list_placeholder_instance(document.body), function () {
                 var len = PLACEHOLDER_INSTANCE_NODE_DATA_PREFIX.length
