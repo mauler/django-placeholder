@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
+import md5
+
 from django.utils.html import escape
 from django import template
 
@@ -11,6 +13,30 @@ from simplejson import dumps
 
 
 register = template.Library()
+
+
+class PlaceholderInstance(Tag):
+    name = 'ph_instance_tagattrs'
+    options = Options(
+        Argument('instance', required=True),
+        Argument('placeholder_admin', default=None, required=False),
+    )
+
+    def render_tag(self, context, instance, placeholder_admin):
+        meta = dumps({
+            'app_label': instance._meta.app_label,
+            'model_name': instance.__class__.__name__,
+            'model_pk': instance.pk,
+            'placeholder_admin': placeholder_admin,
+        })
+        meta = escape(meta)
+        md5hash = md5.new(meta).hexdigest()
+        args = (meta, md5hash)
+        return u"data-placeholder-instance=\"%s\" " \
+            u"data-placeholder-md5hash=\"%s\"" % args
+
+
+register.tag(PlaceholderInstance)
 
 
 class Placeholder(Tag):
@@ -62,39 +88,6 @@ class PlaceholderRT(Tag):
 
 
 register.tag(PlaceholderRT)
-
-
-class PlaceholderInstance(Tag):
-    name = 'placeholder_instance'
-    options = Options(
-        Argument('model_object', required=True),
-        blocks=[('endplaceholder_instance', 'nodelist', )],
-    )
-
-    def render_tag(self, context, model_object, nodelist):
-        if model_object is None:
-            return ""
-
-        meta = dumps({
-            'app_label': model_object._meta.app_label,
-            'model_name': model_object.__class__.__name__,
-            'model_pk': model_object.pk
-        })
-        output = nodelist.render(context)
-        source = \
-            u"<!--placeholder:instance:{model_name}:{pk}-->"  \
-            u"<!--placeholder:instance:meta:{meta}-->" \
-            u"{output}" \
-            u"<!--/placeholder:instance:meta-->" \
-            u"<!--/placeholder:instance:{model_name}:{pk}-->"
-        output = source.format(
-            pk=model_object.pk,
-            meta=meta,
-            model_name=model_object.__class__.__name__,
-            output=output)
-        return output
-
-register.tag(PlaceholderInstance)
 
 
 class PlaceholderObjects(Tag):

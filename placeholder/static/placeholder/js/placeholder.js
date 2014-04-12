@@ -95,45 +95,51 @@ function list_placeholder_objects(element, recursive) {
                 })
             })
 
-            Aloha.jQuery("[data-placeholder-richtext]").aloha();
+            // Aloha.jQuery("[data-placeholder-richtext]").aloha();
 
-            Aloha.bind('aloha-editable-deactivated', function (params) {
-                var content = Aloha.activeEditable.getContents();
-                var container = Aloha.activeEditable.obj[0];
-                var json = $(container).attr("data-placeholder-meta");
-                var meta = JSON.parse(json);
-                if (confirm("Salvar as alterações neste texto ?")) {
-                    meta['value'] = content;
-                    $.post("/placeholder/save/", meta, function () {
-                        alert("Texto alterado com sucesso.")
-                        original_text = meta['value']
-                    })
-                }
-            });
+            // Aloha.bind('aloha-editable-deactivated', function (params) {
+            //     var content = Aloha.activeEditable.getContents();
+            //     var container = Aloha.activeEditable.obj[0];
+            //     var json = $(container).attr("data-placeholder-meta");
+            //     var meta = JSON.parse(json);
+            //     if (confirm("Salvar as alterações neste texto ?")) {
+            //         meta['value'] = content;
+            //         $.post("/placeholder/save/", meta, function () {
+            //             alert("Texto alterado com sucesso.")
+            //             original_text = meta['value']
+            //         })
+            //     }
+            // });
 
-            $.each(list_placeholder_instance(document.body), function () {
-                var len = PLACEHOLDER_INSTANCE_NODE_DATA_PREFIX.length
-                var ph_node = this
-                var meta = jQuery.parseJSON(this.data.slice(len))
-                var nodeinstancedata = this.previousSibling.data;
-                var $this = $(this)
-                var $previous = $(this.previousSibling)
-                var $element = $this.next();
+            $("[data-placeholder-instance]").each(function () {
+                var $this = $(this);
+                var json = $this.attr("data-placeholder-instance");
+                var meta = jQuery.parseJSON(json);
                 var $button = $('<a title="Placeholder" class="fancybox placeholder" data-fancybox-type="iframe">✎</a>');
                 $button.attr({
-                    'href': '/admin/' + meta.app_label + "/" + meta.model_name.toLowerCase() + "/" + meta.model_pk + '/?_popup=1'
+                    'href': __URL_ADMIN_INDEX + meta.app_label + "/" +
+                        meta.model_name.toLowerCase() + "/" + meta.model_pk +
+                        '/?_popup=1&placeholder_admin=' + meta.placeholder_admin
                 })
-                var offset = $element.offset();
+                var offset = $this.offset();
                 $button.css(offset);
                 $button.appendTo(document.body);
                 $button.fancybox({
+                    // beforeLoad: function () {
+                    //     window.dismissAddAnotherPopup = function (win, newId, newRepr) {
+                    //         alert(arguments)
+                    //         console.debug('arguments', arguments);
+                    //     };
+                    // },
+                    // afterLoad: function () {
+                    //     $("iframe").eq(1).get(0).contentWindow.opener = window;
+                    // },
                     afterClose: function () {
                         $.get(location.href, function (source) {
-                            source = source.split("<!--" + nodeinstancedata + "-->")[1];
-                            source = source.split("<!--/" + nodeinstancedata + "-->")[0];
-                            $this.next().remove();
-                            $this.remove();
-                            $previous.after(source);
+                            var md5hash = $this.attr("data-placeholder-md5hash");
+                            var sel = "[data-placeholder-md5hash=" + md5hash +"]";
+                            var $element = $(source).find(sel);
+                            $this.replaceWith($element);
                         });
                     }
                 });
@@ -148,7 +154,7 @@ function list_placeholder_objects(element, recursive) {
                 var $element = $this.next();
                 var $button = $('<a title="Placeholder" class="fancybox placeholder" data-fancybox-type="iframe">✎</a>');
                 $button.attr({
-                    'href': '/admin/' + meta.app_label + "/" + meta.model_name.toLowerCase() + '/?pop=1'
+                    'href': __URL_ADMIN_INDEX + meta.app_label + "/" + meta.model_name.toLowerCase() + '/?pop=1'
                 });
                 var offset = $element.offset();
                 $button.css(offset);
@@ -167,6 +173,8 @@ function list_placeholder_objects(element, recursive) {
                 });
             })
         }
+
+        placeholders_init();
 
         $.getScript("/static/placeholder/js/jquery.hotkeys.js", function () {
             $(document).bind('keyup', 'ctrl+shift+x', function(){
