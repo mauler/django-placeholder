@@ -125,17 +125,9 @@ function list_placeholder_objects(element, recursive) {
                 $button.css(offset);
                 $button.appendTo(document.body);
                 $button.fancybox({
-                    // beforeLoad: function () {
-                    //     window.dismissAddAnotherPopup = function (win, newId, newRepr) {
-                    //         alert(arguments)
-                    //         console.debug('arguments', arguments);
-                    //     };
-                    // },
-                    // afterLoad: function () {
-                    //     $("iframe").eq(1).get(0).contentWindow.opener = window;
-                    // },
                     afterClose: function () {
-                        $.get(location.href, function (source) {
+                        var url = location.href + "?__placeholder_expire_page=1";
+                        $.get(url, function (source) {
                             var md5hash = $this.attr("data-placeholder-md5hash");
                             var sel = "[data-placeholder-md5hash=" + md5hash +"]";
                             var $element = $(source).find(sel);
