@@ -1,0 +1,18 @@
+{% load placeholder_tags %}
+<html>
+    <body>
+        <h1>Portal</h1>
+        <h2>Posts</h2>
+        <ul>
+            {% for post in posts %}
+            <li {% ph_instance_tagattrs post %}>
+                <img src="{{ post.image.url }}" width="100" />
+                <h3>{{ post.title }}</h3>
+                {{ post.body|linebreaks }}
+            </li>
+            {% endfor %}
+        </ul>
+        <script src="{{ STATIC_URL }}jquery-latest.js"></script>
+        {% include "placeholder/includes.html" %}
+    </body>
+</html>
