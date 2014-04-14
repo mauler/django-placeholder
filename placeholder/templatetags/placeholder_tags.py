@@ -3,6 +3,7 @@
 
 import md5
 
+from django.core.urlresolvers import reverse
 from django.utils.html import escape
 from django import template
 
@@ -23,11 +24,25 @@ class PlaceholderInstance(Tag):
     )
 
     def render_tag(self, context, instance, placeholder_admin):
+        if 'request' in context:
+            user = context['request'].user
+            perm = instance._meta.get_change_permission()
+            valid_user = user.is_authenticated() and \
+                user.is_staff and \
+                user.has_perm(perm)
+            if not valid_user:
+                return u""
+
+        args = (instance._meta.app_label, instance._meta.object_name.lower())
+        change_url = reverse(
+            "admin:%s_%s_change" % args, args=(instance.pk, ))
+
         meta = dumps({
             'app_label': instance._meta.app_label,
             'model_name': instance.__class__.__name__,
             'model_pk': instance.pk,
             'placeholder_admin': placeholder_admin,
+            'admin_change_url': change_url
         })
         meta = escape(meta)
         md5hash = md5.new(meta).hexdigest()
