@@ -6,10 +6,12 @@
                 var $this = $(this);
                 var json = $this.attr("data-placeholder-instance");
                 var meta = jQuery.parseJSON(json);
-                var $button = $('<a title="Placeholder" class="fancybox placeholder" data-fancybox-type="iframe">✎</a>');
+                var $button = $("#placeholder-button").clone()
+                $button.attr("id", null);
                 $button.attr({
                     'href': meta.admin_change_url + '?_popup=1&placeholder_admin=' + meta.placeholder_admin
                 })
+                $button.show();
                 var offset = $this.offset();
                 $button.css(offset);
                 $button.appendTo(document.body);
