@@ -72,6 +72,40 @@ Go to URL http://localhost:8000/admin/ and login with username and password `adm
 
 To see the editable content press **CTRL+SHIFT+X** on URL http://localhost:8000/ and some icon will be shown. Click on the icon to edit the element. After edit, close the popup and that part of page will be reloaded (invalidating any cache).
 
+![Posts](https://raw.githubusercontent.com/mauler/django-placeholder/master/docs/usage1.png)
+
+----
+
+To see the editable content press **CTRL+SHIFT+X**, after some icon will be shown click on then to edit icon to edit that element:
+
+![Placeholder Icons](https://raw.githubusercontent.com/mauler/django-placeholder/master/docs/usage2.png)
+
+----
+
+A Pop-up will open with admin edit form of that model instance:
+
+![Admin change form](https://raw.githubusercontent.com/mauler/django-placeholder/master/docs/usage3.png)
+
+----
+
+Lets edit that content, change the texts and the image:
+
+![Admin change form](https://raw.githubusercontent.com/mauler/django-placeholder/master/docs/usage4.png)
+
+----
+
+After changing, you will see the change list page with success message
+
+![Admin change form](https://raw.githubusercontent.com/mauler/django-placeholder/master/docs/usage5.png)
+
+----
+
+And your new content will be available:
+
+![Admin change form](https://raw.githubusercontent.com/mauler/django-placeholder/master/docs/usage6.png)
+
+----
+
 To see how that was done check `./django-placeholder/example/content/templates/home.html`
 
 It's simple stupid :)
