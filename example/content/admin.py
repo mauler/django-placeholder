@@ -4,7 +4,8 @@ from .models import Post
 
 
 class PostAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("title", "position", )
+    list_editable = ("position", )
 
 
 admin.site.register(Post, PostAdmin)

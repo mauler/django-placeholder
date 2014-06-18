@@ -13,6 +13,7 @@
                 })
                 $button.show();
                 var offset = $this.offset();
+                offset.left += $this.width();
                 $button.css(offset);
                 $button.appendTo(document.body);
                 $button.fancybox({
