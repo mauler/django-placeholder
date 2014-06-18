@@ -1,4 +1,4 @@
-{% if user.is_authenticated %}
+{% if user.is_authenticated and user.is_staff %}
   {% include "placeholder/includes/css.html" %}
   {% include "placeholder/includes/script.html" %}
   {% include "placeholder/includes/placeholder_button.html" %}
