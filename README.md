@@ -6,54 +6,31 @@ Yes, another project to create placeholders (inline editable content). The goal 
 Installation
 ------------
 
- 1. Install the python library:
+ 1. Install with pip the django-placeholder python library:
 ```sh
 pip install django-placeholder
 ```
 2. Put `placeholder` on **INSTALLED_APPS**
 ```python
 INSTALLED_APPS = (
-    'app1',
+    # ...
     'placeholder',
-    'app2',
 )
 ```
-
-Demo Project
-------------
-
-There is a example project on the directory `django-placeholder/example` you can test it following these steps:
-
-```sh
-mkvirtualenv demo
-pip install django django-classy-tags
-git clone git@github.com:mauler/django-placeholder.git
-cd django-placeholder/example
-python manage runserver
-```
-Goto URL http://localhost:8000/admin/ and do login with username `admin` and password `admin`.
-
-After access the URL http://localhost:8000/ to see the editable content press **CTRL+SHIFT+X**, after some icon will be shown click on then to edit that element. After editing, close popup and that part of page will be reloaded (Invaliding any cache).
-
-To see how that was done check `django-placeholder/example/content/templates/home.html`
-
-It's simple stupid :)
-
 
 How it works
 ------------
 
-Using [jQuery][1] and [Fancybox][2] we search for elements defined as placeholders on page if the user is authenticated e has permissions to edit those elements (Model instances).
+Using [jQuery](http://jquery.com/) and [Fancybox](http://fancybox.net/) we search for elements defined as placeholders on page if the user is authenticated e has permissions to edit those elements (Model instances).
 
 For each element a hidden button is created on the page (hidden), those elements opens the pop-up (Fancybox) when clicked. This pop-up when closed reload that part of the page.
 
 So, any changes you on the admin (Inside the pop-up) will be available at that part.
 
-
 Basic Usage
 -----------
 
-1. You need [jQuery][1] on your project, if you don'. Add it:
+1. You need [jQuery](http://jquery.com/) on your project, if you don'. Add it:
 ```html
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 ```
@@ -75,6 +52,27 @@ Basic Usage
 ```
 This template tag will return the tag attributes: `data-placeholder-instance` and `data-placeholder-md5hash` that contains all data needed to manipulate the placeholder.
 
-4. Being authenticated and having the permissions necessary (is_staff) press ctrl+shift+x to show the elements that can be edited.
+4. Being authenticated and having the permissions necessary (is_staff) press **CTRL+SHIFT+X** to show the elements that can be edited.
 
 5. Click on the icon, edit, save changes and close the pop-up. :)
+
+Demo Project
+------------
+
+There is a example project on the directory `django-placeholder/example` you can test it following these steps:
+
+```sh
+mkvirtualenv demo
+pip install django django-classy-tags
+git clone git@github.com:mauler/django-placeholder.git
+cd django-placeholder/example
+python manage runserver
+```
+Go to URL http://localhost:8000/admin/ and login with username and password `admin`.
+
+To see the editable content press **CTRL+SHIFT+X** on URL http://localhost:8000/ and some icon will be shown. Click on the icon to edit the element. After edit, close the popup and that part of page will be reloaded (invalidating any cache).
+
+To see how that was done check `./django-placeholder/example/content/templates/home.html`
+
+It's simple stupid :)
+
