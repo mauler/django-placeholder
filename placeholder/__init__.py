@@ -1,3 +1,5 @@
+__version__ = "0.0.1"
+
 from django.contrib import admin
 from django.utils.encoding import iri_to_uri
 
