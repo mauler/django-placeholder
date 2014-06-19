@@ -35,7 +35,7 @@ Basic Usage
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 ```
 
-2. Add this include with the javascript, css and icons necessary to use django-placeholder (They are loaded only for authenticated users that has staff permission):  
+2. Add this include with the javascript, css and icons necessary to use django-placeholder (They are loaded only for authenticated users that has staff permission):
 ```html
 {% extends "placeholder/includes.html" %}
 ```
@@ -76,7 +76,7 @@ To see the editable content press **CTRL+SHIFT+X** on URL http://localhost:8000/
 
 ----
 
-To see the editable content press **CTRL+SHIFT+X**, after some icon will be shown click on then to edit icon to edit that element:
+To see the editable content press **CTRL+SHIFT+X** on URL http://localhost:8000/ and some icon will be shown. Click on the icon to edit the element.
 
 ![Placeholder Icons](https://raw.githubusercontent.com/mauler/django-placeholder/master/docs/usage2.png)
 
