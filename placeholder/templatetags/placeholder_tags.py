@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
+from json import dumps
 import md5
 
 from django.core.urlresolvers import reverse
@@ -9,8 +10,6 @@ from django import template
 
 from classytags.core import Tag, Options
 from classytags.arguments import Argument, MultiKeywordArgument
-
-from simplejson import dumps
 
 
 register = template.Library()

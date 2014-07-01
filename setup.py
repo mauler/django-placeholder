@@ -26,7 +26,7 @@ url = \
 author = 'Paulo R. Macedo'
 author_email = 'proberto.macedo@gmail.com'
 license = 'BSD'
-install_requires = ['django-classy-tags>=0.4', 'simplejson', 'Django']
+install_requires = ['django-classy-tags>=0.4', 'Django']
 
 
 if sys.argv[-1] == 'publish':
