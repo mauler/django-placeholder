@@ -41,7 +41,6 @@ if sys.argv[-1] == 'publish':
     sys.exit()
 
 
-
 def get_packages(package):
     """
     Return root package and all sub-packages.
@@ -49,6 +48,7 @@ def get_packages(package):
     return [dirpath
             for dirpath, dirnames, filenames in os.walk(package)
             if os.path.exists(os.path.join(dirpath, '__init__.py'))]
+
 
 def get_package_data(package):
     """
