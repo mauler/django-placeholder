@@ -17,7 +17,6 @@ else:
     raise RuntimeError(
         "Unable to find version string in %s." % (VERSION_FILE,))
 
-
 name = 'django-placeholder'
 package = 'placeholder'
 description = 'Simple placeholder for django projects'
@@ -73,8 +72,7 @@ setup(
     author=author,
     author_email=author_email,
     license=license,
-    packages=find_packages(),
-    # packages=get_packages(package),
+    packages=find_packages(exclude=('docs', 'example')),
     package_data=get_package_data(package),
     description=description,
     classifiers=[
