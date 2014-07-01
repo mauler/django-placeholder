@@ -17,7 +17,6 @@ else:
     raise RuntimeError(
         "Unable to find version string in %s." % (VERSION_FILE,))
 
-
 name = 'django-placeholder'
 package = 'placeholder'
 description = 'Simple placeholder for django projects'
@@ -26,8 +25,7 @@ url = \
 author = 'Paulo R. Macedo'
 author_email = 'proberto.macedo@gmail.com'
 license = 'BSD'
-install_requires = ['django-classy-tags>=0.4', 'simplejson', 'Django']
-
+install_requires = ['django-classy-tags>=0.4', 'Django']
 
 if sys.argv[-1] == 'publish':
     code = os.system("python setup.py sdist upload")
@@ -41,7 +39,6 @@ if sys.argv[-1] == 'publish':
     sys.exit()
 
 
-
 def get_packages(package):
     """
     Return root package and all sub-packages.
@@ -49,6 +46,7 @@ def get_packages(package):
     return [dirpath
             for dirpath, dirnames, filenames in os.walk(package)
             if os.path.exists(os.path.join(dirpath, '__init__.py'))]
+
 
 def get_package_data(package):
     """
@@ -73,8 +71,7 @@ setup(
     author=author,
     author_email=author_email,
     license=license,
-    packages=find_packages(),
-    # packages=get_packages(package),
+    packages=find_packages(exclude=('docs', 'example')),
     package_data=get_package_data(package),
     description=description,
     classifiers=[
