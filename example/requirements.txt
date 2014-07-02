@@ -1,0 +1,4 @@
+Django
+South
+django-polymorphic
+django-classy-tags
