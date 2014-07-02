@@ -145,7 +145,7 @@
                     </div>
                     <div class="row">
                         {% get_slot "left" as slot %}
-                        <div class="span2" {% ph_instance_tagattrs slot %}>
+                        <div class="span2" {% ph_instance_tagattrs slot "portlets" %}>
                             {% render_slot slot %}
                             <h4 class="box-title"><span class="orange-box-title">Guest</span> <span class="green-box-title">Recipes</span></h4>
                             <img src="{{ STATIC_URL }}home_files/thumb-1-madang.jpg">

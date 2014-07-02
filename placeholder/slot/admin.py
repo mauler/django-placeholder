@@ -6,6 +6,9 @@ from django.contrib import admin
 from polymorphic.admin import \
     PolymorphicParentModelAdmin, PolymorphicChildModelAdmin
 
+import placeholder
+
+from .. import PlaceholderAdmin
 from .models import Slot, Portlet, SlotPortlet
 
 
@@ -42,8 +45,16 @@ class SlotPortletInline(admin.TabularInline):
     raw_id_fields = ("portlet", )
 
 
-class SlotAdmin(admin.ModelAdmin):
+class SlotAdmin(PlaceholderAdmin):
     inlines = (SlotPortletInline, )
 
 
 admin.site.register(Slot, SlotAdmin)
+
+
+class SlotPlaceholder(object):
+    fieldsets = []
+    inlines = (SlotPortletInline, )
+
+
+placeholder.register(SlotAdmin, SlotPlaceholder, 'portlets')

@@ -55,3 +55,6 @@ class SlotPortlet(models.Model):
     class Meta:
         ordering = ("ordering", )
         unique_together = ("slot", "portlet", )
+
+    def __unicode__(self):
+        return self.portlet.title
