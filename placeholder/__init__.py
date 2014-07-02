@@ -18,7 +18,7 @@ class PlaceholderAdmin(admin.ModelAdmin):
         if k in request.GET:
             k = request.GET[k]
             ph = self.registred_placeholders.get(k)
-            if ph is not None and ph.form is not None:
+            if ph is not None and getattr(ph, "form", None) is not None:
                 return ph.form
 
         return super(PlaceholderAdmin, self).get_form(request, obj, **kwargs)
@@ -28,7 +28,7 @@ class PlaceholderAdmin(admin.ModelAdmin):
         if k in request.GET:
             k = request.GET[k]
             ph = self.registred_placeholders.get(k)
-            if ph is not None and ph.fieldsets is not None:
+            if ph is not None and getattr(ph, "fieldsets", None) is not None:
                 return ph.fieldsets
 
         return super(PlaceholderAdmin, self).get_fieldsets(request, obj)
@@ -38,7 +38,7 @@ class PlaceholderAdmin(admin.ModelAdmin):
         if k in request.GET:
             k = request.GET[k]
             ph = self.registred_placeholders.get(k)
-            if ph is not None and ph.fieldsets is not None:
+            if ph is not None and getattr(ph, "fieldsets", None) is not None:
                 return [
                     inline(self.model, self.admin_site)
                     for inline in ph.inlines]
