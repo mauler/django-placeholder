@@ -9,12 +9,12 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Deleting field 'StaticPortlet.template_name'
-        db.delete_column(u'portlet_genericcontent_staticportlet', 'template_name')
+        db.delete_column(u'portlet_sample_staticportlet', 'template_name')
 
 
     def backwards(self, orm):
         # Adding field 'StaticPortlet.template_name'
-        db.add_column(u'portlet_genericcontent_staticportlet', 'template_name',
+        db.add_column(u'portlet_sample_staticportlet', 'template_name',
                       self.gf('django.db.models.fields.CharField')(default='portlet/default.html', max_length=100),
                       keep_default=False)
 
@@ -27,14 +27,14 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'portlet_genericcontent.ctportlet': {
+        u'portlet_sample.ctportlet': {
             'Meta': {'ordering': "('-id',)", 'object_name': 'CTPortlet', '_ormbases': [u'slot.Portlet']},
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
             'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
             u'portlet_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['slot.Portlet']", 'unique': 'True', 'primary_key': 'True'}),
             'template_name': ('django.db.models.fields.CharField', [], {'default': "'portlet/default.html'", 'max_length': '100'})
         },
-        u'portlet_genericcontent.staticportlet': {
+        u'portlet_sample.staticportlet': {
             'Meta': {'ordering': "('-id',)", 'object_name': 'StaticPortlet', '_ormbases': [u'slot.Portlet']},
             'content': ('django.db.models.fields.TextField', [], {}),
             u'portlet_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['slot.Portlet']", 'unique': 'True', 'primary_key': 'True'})
@@ -47,4 +47,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['portlet_genericcontent']
+    complete_apps = ['portlet_sample']

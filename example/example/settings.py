@@ -118,7 +118,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'placeholder.contrib.portlet_genericcontent',
+    'placeholder.contrib.portlet_sample',
     'placeholder.slot',
     'placeholder',
 

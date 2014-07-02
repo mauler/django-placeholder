@@ -9,18 +9,18 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'CTPortlet'
-        db.create_table(u'portlet_genericcontent_ctportlet', (
+        db.create_table(u'portlet_sample_ctportlet', (
             (u'portlet_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['slot.Portlet'], unique=True, primary_key=True)),
             ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
             ('object_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
             ('template_name', self.gf('django.db.models.fields.CharField')(default='portlet/default.html', max_length=100)),
         ))
-        db.send_create_signal(u'portlet_genericcontent', ['CTPortlet'])
+        db.send_create_signal(u'portlet_sample', ['CTPortlet'])
 
 
     def backwards(self, orm):
         # Deleting model 'CTPortlet'
-        db.delete_table(u'portlet_genericcontent_ctportlet')
+        db.delete_table(u'portlet_sample_ctportlet')
 
 
     models = {
@@ -31,7 +31,7 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'portlet_genericcontent.ctportlet': {
+        u'portlet_sample.ctportlet': {
             'Meta': {'ordering': "('-id',)", 'object_name': 'CTPortlet', '_ormbases': [u'slot.Portlet']},
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
             'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
@@ -46,4 +46,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['portlet_genericcontent']
+    complete_apps = ['portlet_sample']
