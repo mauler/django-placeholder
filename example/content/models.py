@@ -1,4 +1,13 @@
+
 from django.db import models
+
+from placeholder.slot.models import Portlet
+
+
+class RecipePortlet(Portlet):
+    template_name = 'portlet/recipe.html'
+    body = models.TextField()
+    image = models.ImageField(upload_to='images')
 
 
 class Post(models.Model):

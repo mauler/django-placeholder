@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from .models import Post
+from placeholder.slot import admin as slot_admin
+
+from .models import Post, RecipePortlet
+
+
+slot_admin.site.register(RecipePortlet)
 
 
 class PostAdmin(admin.ModelAdmin):

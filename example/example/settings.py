@@ -118,9 +118,14 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'placeholder.contrib.portlet_genericcontent',
+    'placeholder.slot',
     'placeholder',
 
     'content',
+
+    'polymorphic',
+    'south',
 
     'django.contrib.auth',
     'django.contrib.contenttypes',
