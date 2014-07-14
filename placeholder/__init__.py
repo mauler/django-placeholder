@@ -2,11 +2,12 @@ __version__ = "0.0.1"
 
 from django.contrib import admin
 from django.utils.encoding import iri_to_uri
+from django import forms
 
 
 def register(modeladmin, placeholder, key=None):
     if key is None:
-        key = placeholder.__name__
+        key = placeholder.__name__.replace("Placeholder", "")
     modeladmin.registred_placeholders[key] = placeholder
 
 
@@ -18,8 +19,20 @@ class PlaceholderAdmin(admin.ModelAdmin):
         if k in request.GET:
             k = request.GET[k]
             ph = self.registred_placeholders.get(k)
-            if ph is not None and getattr(ph, "form", None) is not None:
-                return ph.form
+
+            if ph:
+
+                if getattr(ph, 'nullform'):
+
+                    class NullForm(forms.ModelForm):
+                        class Meta:
+                            fields = []
+                            model = self.model
+
+                    return NullForm
+
+                if getattr(ph, "form", None) is not None:
+                    return ph.form
 
         return super(PlaceholderAdmin, self).get_form(request, obj, **kwargs)
 
