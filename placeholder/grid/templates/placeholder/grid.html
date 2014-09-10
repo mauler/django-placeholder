@@ -1,0 +1,5 @@
+{% spaceless %}
+    {% for column1 in grid.column_set.all %}
+        {% include "placeholder/column.html" with column=column1 %}
+    {% endfor %}
+{% endspaceless %}

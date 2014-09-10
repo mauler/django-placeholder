@@ -1,6 +1,6 @@
 # Django settings for example project.
 import sys
-sys.path.append("../")
+sys.path.insert(0, "../")
 
 SESSION_COOKIE_NAME = "examplesessionid"
 
@@ -118,13 +118,16 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+
     'placeholder.contrib.portlet_sample',
+    'placeholder.grid',
     'placeholder.slot',
     'placeholder',
 
     'content',
 
     'polymorphic',
+
     'south',
 
     'django.contrib.auth',
