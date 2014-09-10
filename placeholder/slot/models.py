@@ -24,15 +24,17 @@ class Portlet(PolymorphicModel):
 
 
 class Slot(models.Model):
-    key = models.TextField(
+    key = models.CharField(
         db_index=True,
+        max_length=1024,
         unique=True,
         verbose_name=_("Key"),
     )
 
-    description = models.TextField(
+    description = models.CharField(
         _(u"Description"),
         blank=True,
+        max_length=100,
     )
 
     portlets = models.ManyToManyField(
@@ -50,7 +52,8 @@ class Slot(models.Model):
 class SlotPortlet(models.Model):
     slot = models.ForeignKey("Slot")
     portlet = models.ForeignKey("Portlet")
-    ordering = models.PositiveIntegerField(default=999)
+    ordering = models.PositiveIntegerField(
+        default=lambda: SlotPortlet.objects.count())
 
     class Meta:
         ordering = ("ordering", )

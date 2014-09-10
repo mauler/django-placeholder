@@ -53,7 +53,8 @@ admin.site.register(Slot, SlotAdmin)
 
 
 class SlotPlaceholder(object):
-    fieldsets = []
+    fields = ("key", "description", )
+    readonly_fields = ("key", )
     inlines = (SlotPortletInline, )
 
 
