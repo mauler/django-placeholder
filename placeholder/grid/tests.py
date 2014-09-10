@@ -19,6 +19,6 @@ class GridTestCase(TestCase):
         cola.column_row_set.create()
 
     def test_render(self):
-        template = get_template("placeholder/grid.html")
+        template = get_template("grid/grid.html")
         rendered = template.render(Context({'grid': self.grid}))
         print rendered

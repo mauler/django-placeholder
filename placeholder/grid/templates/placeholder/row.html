@@ -1,9 +1,0 @@
-<div clas="row">
-    {% for column in row.row_column_set.all %}
-        {% with template_name="placeholder/column.html" %}
-            {% include template_name %}
-        {% endwith %}
-    {% empty %}
-        Empty Row
-    {% endfor %}
-</div>

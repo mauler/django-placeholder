@@ -1,6 +1,7 @@
+<!DOCTYPE html>
+{% load grid_tags %}
 {% load placeholder_tags %}
 {% load slot_tags %}
-<!DOCTYPE html>
 <!-- saved from url=(0040)http://wbpreview.com/previews/WB015P5K7/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
@@ -40,7 +41,12 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         </script>
-        <!-- Facebook-->
+
+        {% get_grid "/" as grid %}
+        <div class="container" {% ph_instance_tagattrs grid %}>
+            {% render_grid "/" %}
+        </div>
+
         <div class="container" id="wrapper">
             <div class="row">
                 <div class="span4">

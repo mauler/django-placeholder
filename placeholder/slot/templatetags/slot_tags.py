@@ -60,7 +60,6 @@ class RenderSlot(InclusionTag):
     )
 
     def get_context(self, context, keys):
-        print repr(keys)
         if keys and isinstance(keys[0], models.Slot):
             slot = keys[0]
 

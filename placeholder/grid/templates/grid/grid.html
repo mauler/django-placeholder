@@ -1,0 +1,9 @@
+{% spaceless %}
+<div class="container-fluid">
+    <div class="row-fluid">
+        {% for column1 in grid.column_set.all %}
+            {% include "grid/column.html" with column=column1 %}
+        {% endfor %}
+    </div>
+</div>
+{% endspaceless %}

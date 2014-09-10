@@ -19,8 +19,8 @@ class Migration(SchemaMigration):
         # Adding model 'Slot'
         db.create_table(u'slot_slot', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('key', self.gf('django.db.models.fields.TextField')(unique=True, db_index=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('key', self.gf('django.db.models.fields.CharField')(unique=True, max_length=1024, db_index=True)),
+            ('description', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
         ))
         db.send_create_signal(u'slot', ['Slot'])
 
@@ -29,11 +29,18 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('slot', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['slot.Slot'])),
             ('portlet', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['slot.Portlet'])),
+            ('ordering', self.gf('django.db.models.fields.PositiveIntegerField')(default=2)),
         ))
         db.send_create_signal(u'slot', ['SlotPortlet'])
 
+        # Adding unique constraint on 'SlotPortlet', fields ['slot', 'portlet']
+        db.create_unique(u'slot_slotportlet', ['slot_id', 'portlet_id'])
+
 
     def backwards(self, orm):
+        # Removing unique constraint on 'SlotPortlet', fields ['slot', 'portlet']
+        db.delete_unique(u'slot_slotportlet', ['slot_id', 'portlet_id'])
+
         # Deleting model 'Portlet'
         db.delete_table(u'slot_portlet')
 
@@ -60,14 +67,15 @@ class Migration(SchemaMigration):
         },
         u'slot.slot': {
             'Meta': {'object_name': 'Slot'},
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'key': ('django.db.models.fields.TextField', [], {'unique': 'True', 'db_index': 'True'}),
+            'key': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '1024', 'db_index': 'True'}),
             'portlets': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['slot.Portlet']", 'through': u"orm['slot.SlotPortlet']", 'symmetrical': 'False'})
         },
         u'slot.slotportlet': {
-            'Meta': {'ordering': "('id',)", 'object_name': 'SlotPortlet'},
+            'Meta': {'ordering': "('ordering',)", 'unique_together': "(('slot', 'portlet'),)", 'object_name': 'SlotPortlet'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'ordering': ('django.db.models.fields.PositiveIntegerField', [], {'default': '2'}),
             'portlet': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['slot.Portlet']"}),
             'slot': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['slot.Slot']"})
         }

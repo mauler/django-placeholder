@@ -1,0 +1,11 @@
+<div class="container-fluid">
+    <div clas="row-fluid">
+        {% for column in row.row_column_set.all %}
+            {% with template_name="grid/column.html" %}
+                {% include template_name %}
+            {% endwith %}
+        {% empty %}
+            Empty Row
+        {% endfor %}
+    </div>
+</div>

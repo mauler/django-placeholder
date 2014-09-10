@@ -12,7 +12,7 @@ class Migration(SchemaMigration):
         db.create_table(u'grid_row', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('column', self.gf('django.db.models.fields.related.ForeignKey')(related_name='column_row_set', to=orm['grid.Column'])),
-            ('columns', self.gf('django.db.models.fields.PositiveIntegerField')()),
+            ('columns', self.gf('django.db.models.fields.PositiveIntegerField')(null=True)),
         ))
         db.send_create_signal(u'grid', ['Row'])
 
@@ -29,7 +29,8 @@ class Migration(SchemaMigration):
         # Adding model 'Grid'
         db.create_table(u'grid_grid', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
+            ('key', self.gf('django.db.models.fields.CharField')(unique=True, max_length=1024, db_index=True)),
+            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
         ))
         db.send_create_signal(u'grid', ['Grid'])
 
@@ -56,13 +57,14 @@ class Migration(SchemaMigration):
         },
         u'grid.grid': {
             'Meta': {'object_name': 'Grid'},
+            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'})
+            'key': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '1024', 'db_index': 'True'})
         },
         u'grid.row': {
             'Meta': {'object_name': 'Row'},
             'column': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'column_row_set'", 'to': u"orm['grid.Column']"}),
-            'columns': ('django.db.models.fields.PositiveIntegerField', [], {}),
+            'columns': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         }
     }

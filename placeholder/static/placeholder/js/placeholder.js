@@ -23,10 +23,14 @@
                         $.get(url, function (source) {
                             var md5hash = $this.attr("data-placeholder-md5hash");
                             var sel = "[data-placeholder-md5hash=" + md5hash +"]";
+                            var d = document.implementation.createHTMLDocument();
+                            d.write(source);
                             var $current = $(sel);
-                            var $updated = $(source).find(sel);
+                            var $updated = $(sel, d);
+                            console.debug($current);
+                            console.debug($updated);
                             $current.replaceWith($updated);
-                        });
+                        }, "html");
                     }
                 });
             })
