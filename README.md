@@ -45,7 +45,7 @@ Basic Usage
 
 2. Add this include with the javascript, css and icons necessary to use django-placeholder (They are loaded only for authenticated users that has staff permission):
 ```html
-{% extends "placeholder/includes.html" %}
+{% include "placeholder/includes.html" %}
 ```
 
 3. To make a element act as a placeholder you need to load the template tag library `placeholder_tags` and use the template tag `ph_instance_tag_attrs`:
