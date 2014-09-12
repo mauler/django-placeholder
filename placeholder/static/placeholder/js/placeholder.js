@@ -21,12 +21,14 @@
                 window._$b = $button;
                 window._$t = $this;
                 $button.hover(function () {
-                    $this.effect("highlight", 500);
+                    // $this.effect("highlight", 500);
                     $this.addClass("transparent");
                 }, function () {
                     $this.removeClass("transparent");
                 });
                 $button.fancybox({
+                    // autoScale: false,
+                    autoDimensions: false,
                     title: '',
                     width: '90%',
                     height: '90%',
@@ -42,7 +44,10 @@
                             $current.each(function (index, element) {
                                 var $element = $updated.eq(index);
                                 $(element).replaceWith($element);
-                                $element.effect("pulsate", 500);
+                                $('html, body').animate({
+                                    scrollTop: $element.offset().top + 'px'
+                                }, 'fast');
+                                $element.effect("highlight", 1000);
                             });
                             $(".placeholder-button").remove();
                             placeholders_init()
