@@ -36,7 +36,7 @@ def get_key(context, keys):
 class GetSlot(AsTag):
     name = 'get_slot'
     options = Options(
-        MultiValueArgument('keys', required=False, resolve=False),
+        MultiValueArgument('keys', required=False, resolve=True),
         'as',
         Argument('varname', required=False, resolve=False, default="slot")
     )

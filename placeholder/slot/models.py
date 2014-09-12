@@ -14,7 +14,7 @@ class Portlet(PolymorphicModel):
     )
 
     class Meta:
-        ordering = ("-id", )
+        ordering = ("title", )
 
     def __unicode__(self):
         return self.title
@@ -52,8 +52,7 @@ class Slot(models.Model):
 class SlotPortlet(models.Model):
     slot = models.ForeignKey("Slot")
     portlet = models.ForeignKey("Portlet")
-    ordering = models.PositiveIntegerField(
-        default=lambda: SlotPortlet.objects.count())
+    ordering = models.PositiveIntegerField()
 
     class Meta:
         ordering = ("ordering", )

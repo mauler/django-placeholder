@@ -31,6 +31,10 @@ class PortletAdmin(PolymorphicChildModelAdmin):
 
 class MainPortletAdmin(PolymorphicParentModelAdmin):
     base_model = Portlet
+    list_display = ("id", "title", "polymorphic_ctype", )
+    list_filter = ("polymorphic_ctype", )
+    list_display_links = ("id", "title", )
+    search_fields = ("title", )
 
     def get_child_models(self):
         return PORTLETADMINS
@@ -43,6 +47,7 @@ class SlotPortletInline(admin.TabularInline):
     extra = 1
     model = SlotPortlet
     raw_id_fields = ("portlet", )
+    sortable_field_name = "ordering"
 
 
 class SlotAdmin(PlaceholderAdmin):

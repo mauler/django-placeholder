@@ -1,0 +1,18 @@
+.placeholder {
+    position: absolute;
+    z-index: 5000;
+    /*background-color: black;*/
+    border: 2px dotted black;
+    color: white;
+}
+/*
+div[data-placeholder-instance] {
+    border: 2px dotted black;
+    /*opacity: 0.90;*/
+}*/
+
+.transparent {
+    zoom: 1;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}
