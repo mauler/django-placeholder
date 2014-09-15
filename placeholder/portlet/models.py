@@ -27,12 +27,16 @@ def easyportlet_post_init(sender, instance, **kw):
         for k, v in data.items():
             setattr(instance, k, v)
 
+        for f in instance.file_set.all():
+            setattr(instance, f.fieldname, f.file)
+
 
 signals.post_init.connect(easyportlet_post_init, sender=EasyPortlet)
 
 
 class File(models.Model):
     portlet = models.ForeignKey("EasyPortlet")
+    fieldname = models.CharField(max_length=50)
     file = models.FileField(upload_to="portlets/files")
 
 
