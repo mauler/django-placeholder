@@ -22,6 +22,9 @@ class Portlet(PolymorphicModel):
     def get_context(self, context):
         return {}
 
+    def get_template_name(self):
+        return self.template_name
+
 
 class Slot(models.Model):
     key = models.CharField(

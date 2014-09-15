@@ -16,6 +16,10 @@ class EasyPortlet(Portlet):
     )
     json_data = models.TextField()
 
+    def get_template_name(self):
+        path = self._meta.get_field('template_name').path
+        return 'portlets' + self.template_name.replace(path, '', 1)
+
 
 def easyportlet_post_init(sender, instance, **kw):
     if instance.json_data:

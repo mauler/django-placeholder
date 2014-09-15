@@ -24,7 +24,7 @@ class EasyPortletAdmin(admin.ModelAdmin):
             source = open(template_name).read()
             data = extract_form_declaration(source)
             initial = {}
-            if obj:
+            if obj and obj.json_data:
                 initial = loads(obj.json_data)
 
             fields = declare_fields(data.get('portlet', {}), initial)
