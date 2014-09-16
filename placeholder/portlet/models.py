@@ -1,10 +1,9 @@
-from json import loads
-
 from django.conf import settings
 from django.db.models import signals
 from django.db import models
 
 from ..slot.models import Portlet
+from .utils import apply_metadata
 
 
 class EasyPortlet(Portlet):
@@ -22,13 +21,7 @@ class EasyPortlet(Portlet):
 
 
 def json_data_post_init(sender, instance, **kw):
-    if instance.json_data:
-        data = loads(instance.json_data)
-        for k, v in data.items():
-            setattr(instance, k, v)
-
-        for f in instance.file_set.all():
-            setattr(instance, f.fieldname, f.file)
+    apply_metadata(instance)
 
 
 signals.post_init.connect(json_data_post_init, sender=EasyPortlet)

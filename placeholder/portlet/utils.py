@@ -1,10 +1,67 @@
 from collections import OrderedDict
+from json import loads, dumps
 import re
 
+from django.core.files.base import File
+from django.core.files.uploadedfile import UploadedFile
+from django.db.models import Model
 from django import forms
 
 from bs4 import BeautifulSoup
 import yaml
+
+
+def get_form_declaration(template_name):
+    source = open(template_name).read()
+    return extract_form_declaration(source)
+
+
+def set_metadata(instance, data):
+    files = {}
+    validfiles = []
+    for key, val in data.items():
+        if isinstance(val, UploadedFile):
+            del data[key]
+            files[key] = val
+            validfiles.append(key)
+        elif isinstance(val, File):
+            del data[key]
+            validfiles.append(key)
+        elif isinstance(val, File):
+            del data[key]
+            validfiles.append(key)
+        elif isinstance(val, Model):
+            del data[key]
+
+    instance.json_data = dumps(data)
+    instance.save(update_fields=['json_data'])
+    instance.file_set.exclude(fieldname__in=validfiles).delete()
+    for fieldname, uploadedfile in files.items():
+        fo, created = instance.file_set.get_or_create(
+            fieldname=fieldname, defaults={'file': uploadedfile})
+        if not created:
+            fo.file = uploadedfile
+            fo.save(update_fields=['file'])
+
+
+def load_metadata(instance):
+    meta = {}
+    if instance.json_data:
+        data = loads(instance.json_data)
+        for key in ('id', "template_name", ):
+            if key in data:
+                del data[key]
+        meta.update(data)
+
+    for f in instance.file_set.all():
+        meta[f.fieldname] = f.file
+
+    return meta
+
+
+def apply_metadata(instance):
+    for k, v in load_metadata(instance).items():
+        setattr(instance, k, v)
 
 
 def extract_form_declaration(source):
@@ -24,7 +81,7 @@ def extract_form_declaration(source):
     return {}
 
 
-def get_helper_declaration(text):
+def get_helper_fields(text):
     fields = []
     for name in text.lower().split(","):
         field = None
@@ -51,7 +108,16 @@ def get_helper_declaration(text):
                     {'CharField': {'required': True, 'widget': "Textarea"}}}
         if field is not None:
             fields.append(field)
-    return {"portlet": fields}
+    return fields
+
+
+def get_helper_declaration(text):
+    parts = text.split("|", 1)
+    data = {'collection': {}}
+    data['portlet'] = get_helper_fields(parts[0])
+    if len(parts) > 1:
+        data['collection'] = get_helper_fields(parts[1])
+    return data
 
 
 def declare_fields(data, initial={}):
