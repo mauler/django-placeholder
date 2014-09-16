@@ -21,7 +21,7 @@ class EasyPortlet(Portlet):
         return 'portlets' + self.template_name.replace(path, '', 1)
 
 
-def easyportlet_post_init(sender, instance, **kw):
+def json_data_post_init(sender, instance, **kw):
     if instance.json_data:
         data = loads(instance.json_data)
         for k, v in data.items():
@@ -31,7 +31,7 @@ def easyportlet_post_init(sender, instance, **kw):
             setattr(instance, f.fieldname, f.file)
 
 
-signals.post_init.connect(easyportlet_post_init, sender=EasyPortlet)
+signals.post_init.connect(json_data_post_init, sender=EasyPortlet)
 
 
 class File(models.Model):
@@ -44,8 +44,19 @@ class Item(models.Model):
     portlet = models.ForeignKey("EasyPortlet")
     title = models.CharField(max_length=100)
     json_data = models.TextField()
+    position = models.PositiveIntegerField()
+
+    class Meta:
+        ordering = ("portlet", "position", "title", )
+
+    def __unicode__(self):
+        return self.title
+
+
+signals.post_init.connect(json_data_post_init, sender=Item)
 
 
 class ItemFile(models.Model):
-    item = models.ForeignKey("Item")
+    item = models.ForeignKey("Item", related_name="file_set")
+    fieldname = models.CharField(max_length=50)
     file = models.FileField(upload_to="portlets/files")
