@@ -29,8 +29,7 @@ class EasyPortlet(InclusionTag):
             settings.EASYPORTLET_TEMPLATES_PATH,
             template_name)
         qs = slot.slotportlet_set.filter(
-            portlet__easyportlet__template_name=template_name,
-            portlet__easyportlet__title=title)
+            portlet__easyportlet__template_name=template_name)
         qs = qs.distinct()
         qs = qs[:1]
         if qs.exists():

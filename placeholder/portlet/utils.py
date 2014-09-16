@@ -30,6 +30,12 @@ def get_helper_declaration(text):
         field = None
         if name == 'title':
             field = {name: {'CharField': {'required': True}}}
+        elif name == 'price':
+            field = {name: {'CharField': {'required': True}}}
+        elif name == 'date':
+            field = {name: {'DateField': {'required': True}}}
+        elif name == 'subtitle':
+            field = {name: {'CharField': {'required': True}}}
         elif name == 'hat':
             field = {name: {'CharField': {'required': True}}}
         elif name == 'image':

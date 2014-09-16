@@ -34,7 +34,7 @@ class EasyPortletAdmin(admin.ModelAdmin):
 
             fields = declare_fields(data.get('portlet', {}), initial)
             meta_fields = \
-                ['template_name'] + [name for name, field in fields]
+                ['template_name', 'title'] + [name for name, field in fields]
 
             class Meta:
                 fields = meta_fields
