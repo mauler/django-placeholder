@@ -1,6 +1,10 @@
 # Django settings for example project.
 import sys
-sys.path.append("../")
+sys.path.insert(0, "../")
+
+EASYPORTLET_TEMPLATES_PATH = "content/templates/portlet"
+
+TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
 
 SESSION_COOKIE_NAME = "examplesessionid"
 
@@ -118,9 +122,18 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+
+    'placeholder.contrib.portlet_sample',
+    'placeholder.grid',
+    'placeholder.portlet',
+    'placeholder.slot',
     'placeholder',
 
     'content',
+
+    'polymorphic',
+
+    'south',
 
     'django.contrib.auth',
     'django.contrib.contenttypes',

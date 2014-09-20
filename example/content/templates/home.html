@@ -1,4 +1,7 @@
-{% load placeholder_tags %}<!DOCTYPE html>
+<!DOCTYPE html>
+{% load grid_tags %}
+{% load placeholder_tags %}
+{% load slot_tags %}
 <!-- saved from url=(0040)http://wbpreview.com/previews/WB015P5K7/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
@@ -38,7 +41,12 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         </script>
-        <!-- Facebook-->
+
+        {% get_grid "/" as grid %}
+        <div class="container" {% ph_instance_tagattrs grid %}>
+            {% render_grid "/" %}
+        </div>
+
         <div class="container" id="wrapper">
             <div class="row">
                 <div class="span4">
@@ -142,7 +150,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="span2">
+                        {% get_slot "left" as slot %}
+                        <div class="span2" {% ph_instance_tagattrs slot "portlets" %}>
+                            {% render_slot slot %}
                             <h4 class="box-title"><span class="orange-box-title">Guest</span> <span class="green-box-title">Recipes</span></h4>
                             <img src="{{ STATIC_URL }}home_files/thumb-1-madang.jpg">
                             <a href="http://wbpreview.com/previews/WB015P5K7/detail.html"><h4>Resep Sup: Sup Gyuniku</h4></a>

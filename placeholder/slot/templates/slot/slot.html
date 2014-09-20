@@ -1,0 +1,5 @@
+{% load portlet_tags %}
+
+{% for portlet in slot.get_portlets %}
+    {% render_portlet portlet %}
+{% endfor %}

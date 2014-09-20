@@ -1,0 +1,9 @@
+<div class="span{{ column.size }}">
+    {% for row in column.column_row_set.all %}
+        {% with template_name="grid/row.html" %}
+            {% include template_name %}
+        {% endwith %}
+    {% empty %}
+        Empty Column
+    {% endfor %}
+</div>

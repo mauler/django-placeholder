@@ -25,7 +25,7 @@ url = \
 author = 'Paulo R. Macedo'
 author_email = 'proberto.macedo@gmail.com'
 license = 'BSD'
-install_requires = ['django-classy-tags>=0.4', 'Django']
+install_requires = ['django-classy-tags>=0.4', 'Django', 'django-polymorphic']
 
 
 if sys.argv[-1] == 'publish':
