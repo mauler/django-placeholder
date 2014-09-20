@@ -31,9 +31,11 @@ class PortletAdmin(PolymorphicChildModelAdmin):
 
 class MainPortletAdmin(PolymorphicParentModelAdmin):
     base_model = Portlet
+    change_list_filter_template = "admin/filter_listing.html"
+    change_list_template = "admin/change_list_filter_sidebar.html"
     list_display = ("id", "title", "polymorphic_ctype", )
-    list_filter = ("polymorphic_ctype", )
     list_display_links = ("id", "title", )
+    ordering = ("-id", )
     search_fields = ("title", )
 
     def get_child_models(self):
