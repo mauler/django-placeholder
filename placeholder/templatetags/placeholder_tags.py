@@ -15,6 +15,43 @@ from classytags.arguments import Argument, MultiKeywordArgument
 register = template.Library()
 
 
+class PlaceholderField(Tag):
+    name = 'ph_field_tagattrs'
+    options = Options(
+        Argument('instance', required=True),
+        Argument('field', required=True),
+    )
+
+    def render_tag(self, context, instance, field):
+        if 'request' in context:
+            user = context['request'].user
+            perm = instance._meta.get_change_permission()
+            valid_user = user.is_authenticated() and \
+                user.is_staff and \
+                user.has_perm(perm)
+            if not valid_user:
+                return u""
+
+        save_url = reverse("placeholder_save")
+
+        meta = dumps({
+            'app_label': instance._meta.app_label,
+            'model_name': instance.__class__.__name__,
+            'model_pk': instance.pk,
+            'model_field': field,
+            'save_url': save_url,
+        })
+
+        meta = escape(meta)
+        md5hash = md5.new(meta).hexdigest()
+        args = (meta, md5hash)
+        return u"data-placeholder-field=\"%s\" " \
+            u"data-placeholder-md5hash=\"%s\"" % args
+
+
+register.tag(PlaceholderField)
+
+
 class PlaceholderInstance(Tag):
     name = 'ph_instance_tagattrs'
     options = Options(

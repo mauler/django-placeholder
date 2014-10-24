@@ -13,8 +13,18 @@
       position: absolute;
       z-index: 5000;
       /*background-color: black;*/
-      border: 2px solid black;
+      /*border: 1px solid black;*/
       color: white;
+  }
+
+  [data-placeholder-field][contenteditable]:focus {
+  }
+
+  [data-placeholder-field][contenteditable] {
+    border: 1px dotted orange;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
   }
 
   </style>
