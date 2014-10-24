@@ -111,7 +111,5 @@
             placeholders_init();
         });
 
-        placeholders_init();
-
     })
 })(jQuery)
