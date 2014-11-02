@@ -2,6 +2,28 @@
     $(function () {
         var placeholders_init = function () {
 
+            var multiedit_data = {};
+
+            var $multiedit_button = $("#placeholder-multiedit-button");
+
+            if (__placeholder_multiedit) {
+
+                function prepare(arr, key) {
+                    arr[key] = arr[key] ? arr[key]: {};
+                    return arr[key];
+                }
+
+                $multiedit_button.click(function () {
+
+                    var url = '/placeholder/multiedit/save/';
+                    var params = {data: JSON.stringify(multiedit_data)};
+                    $.post(url, params, function () {
+                        $multiedit_button.hide();
+                    })
+
+                });
+            }
+
             $("[data-placeholder-field]").each(function () {
                 var $this = $(this);
                 var json = $this.attr("data-placeholder-field");
@@ -33,12 +55,27 @@
                 }
 
                 $this.bind("keyup blur", function ()  {
-                    if (get_text() != original_text) {
-                        $button.show();
+                    if (__placeholder_multiedit) {
+                        var text = get_text();
+                        if (text != original_text) {
+
+                            var data = multiedit_data;
+                            var data = prepare(data, meta.app_label);
+                            var data = prepare(data, meta.model_name);
+                            var data = prepare(data, meta.model_pk);
+                            data[meta.model_field] = text;
+
+                            $multiedit_button.show();
+                        }
                     }
                     else {
-                        $button.hide();
-                    };
+                        if (get_text() != original_text) {
+                            $button.show();
+                        }
+                        else {
+                            $button.hide();
+                        };
+                    }
                 });
 
                 $this.attr("contenteditable", true);

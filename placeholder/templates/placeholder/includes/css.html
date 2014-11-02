@@ -1,6 +1,13 @@
 {% if user.is_authenticated %}
   <style>
 
+  #placeholder-multiedit-button {
+    right: 10px;
+    top: 10px;
+    position: fixed;
+    z-index: 10000;
+  };
+
   .transparent {
       zoom: 1;
       filter: alpha(opacity=50);
@@ -18,13 +25,11 @@
   }
 
   [data-placeholder-field][contenteditable]:focus {
+
   }
 
   [data-placeholder-field][contenteditable] {
-    border: 1px dotted orange;
-    box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    -webkit-box-sizing:border-box;
+    background-color: rgba(160, 160, 160, 0.25);
   }
 
   </style>

@@ -1,8 +1,13 @@
 __version__ = "0.0.1"
 
+import threading
+
 from django.contrib import admin
 from django.utils.encoding import iri_to_uri
 from django import forms
+
+
+world = threading.local()
 
 
 def register(modeladmin, placeholder, key=None):

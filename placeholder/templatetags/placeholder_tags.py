@@ -15,6 +15,20 @@ from classytags.arguments import Argument, MultiKeywordArgument
 register = template.Library()
 
 
+class PlaceholderMultiedit(Tag):
+    name = 'ph_multiedit'
+    options = Options(
+        Argument('multiedit', required=False, default=False),
+    )
+
+    def render_tag(self, context, multiedit):
+        arg = multiedit and "true" or "false"
+        return "<script>var __placeholder_multiedit = %s;</script>" % arg
+
+
+register.tag(PlaceholderMultiedit)
+
+
 class PlaceholderField(Tag):
     name = 'ph_field_tagattrs'
     options = Options(
