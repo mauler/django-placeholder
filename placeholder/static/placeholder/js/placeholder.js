@@ -90,6 +90,30 @@
 
             });
 
+            $("[data-placeholder-image]").each(function () {
+
+                var $this = $(this);
+                var json = $this.attr("data-placeholder-image");
+                var meta = jQuery.parseJSON(json);
+
+                var $button = $("#placeholder-image-button").clone();
+                $button.attr("id", null);
+                $button.addClass("placeholder-image-button");
+
+                var offset = $this.offset();
+                offset.left += $this.width();
+                $button.css(offset);
+
+                $button.show();
+                $button.appendTo(document.body);
+
+                $button.click(function () {
+                    $("input[type=file]").click();
+                    return false;
+                });
+
+            });
+
             $("[data-placeholder-instance]").each(function () {
                 var $this = $(this);
                 var json = $this.attr("data-placeholder-instance");

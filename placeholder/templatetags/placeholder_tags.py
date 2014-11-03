@@ -30,6 +30,7 @@ register.tag(PlaceholderMultiedit)
 
 
 class PlaceholderField(Tag):
+    attr_data_placeholder_field = "data-placeholder-field"
     name = 'ph_field_tagattrs'
     options = Options(
         Argument('instance', required=True),
@@ -58,12 +59,20 @@ class PlaceholderField(Tag):
 
         meta = escape(meta)
         md5hash = md5.new(meta).hexdigest()
-        args = (meta, md5hash)
-        return u"data-placeholder-field=\"%s\" " \
+        args = (self.attr_data_placeholder_field, meta, md5hash)
+        return u"%s=\"%s\" " \
             u"data-placeholder-md5hash=\"%s\"" % args
 
 
 register.tag(PlaceholderField)
+
+
+class PlaceholderImage(PlaceholderField):
+    attr_data_placeholder_field = "data-placeholder-image"
+    name = 'ph_image_tagattrs'
+
+
+register.tag(PlaceholderImage)
 
 
 class PlaceholderInstance(Tag):
