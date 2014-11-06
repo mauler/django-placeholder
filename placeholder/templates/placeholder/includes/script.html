@@ -1,4 +1,4 @@
-{% if user.is_authenticated %}
+{% if user.is_authenticated and user.is_staff %}
     <script>
       __ADMIN_INDEX_URL = "{% url  "admin:index" %}";
       __STATIC_URL = "{{ STATIC_URL }}";

@@ -1,6 +1,7 @@
 (function ($) {
     $(function () {
-        var placeholders_init = function () {
+        window.__placeholder_multiedit = window.__placeholder_multiedit ? window.__placeholder_multiedit : false;
+        window.placeholders_init = function () {
 
             var multiedit_data = {};
 
@@ -168,9 +169,14 @@
 
         }
 
-        $(document).bind('keyup', 'ctrl+shift+x', function(){
+        if (window.PLACEHOLDER_AUTOSTART) {
             placeholders_init();
-        });
+        }
+        else {
+            $(document).bind('keyup', 'ctrl+shift+x', function(){
+                placeholders_init();
+            });
+        }
 
     })
 })(jQuery)
