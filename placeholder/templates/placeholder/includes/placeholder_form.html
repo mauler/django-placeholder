@@ -1,3 +1,5 @@
-<form method="post" enctype="multipart/form-data" style="display: none">
+<form id="__placeholder_form" method="post" enctype="multipart/form-data" style="display: none"
+    action="/placeholder/upload/">
+    {% csrf_token %}
     <input name="file" type="file" />
 </form>
