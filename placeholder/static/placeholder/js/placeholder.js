@@ -187,8 +187,11 @@
                 $button.attr("id", null);
                 $button.addClass("placeholder-instance-button");
                 $button.addClass("placeholder-button");
+                var url = meta.admin_change_url + '?_popup=1' +
+                    '&placeholder_admin=' + meta.placeholder_admin +
+                    '&placeholder_admin_fields=' + meta.placeholder_admin_fields;
                 $button.attr({
-                    'href': meta.admin_change_url + '?_popup=1&placeholder_admin=' + meta.placeholder_admin
+                    'href': url
                 })
                 $button.show();
                 var offset = $this.offset();

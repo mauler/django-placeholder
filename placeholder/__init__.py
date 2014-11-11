@@ -4,7 +4,7 @@ import threading
 
 from django.contrib import admin
 from django.utils.encoding import iri_to_uri
-from django import forms
+from django import forms as django_forms
 
 
 world = threading.local()
@@ -21,14 +21,14 @@ class PlaceholderAdmin(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         k = 'placeholder_admin'
-        if k in request.GET:
+        if request.GET.get(k):
             k = request.GET[k]
             ph = self.registred_placeholders.get(k)
             if ph:
 
                 if getattr(ph, 'nullform'):
 
-                    class NullForm(forms.ModelForm):
+                    class NullForm(django_forms.ModelForm):
                         class Meta:
                             fields = []
                             model = self.model
@@ -48,6 +48,11 @@ class PlaceholderAdmin(admin.ModelAdmin):
             if ph is not None and getattr(ph, "fieldsets", None) is not None:
                 return ph.fieldsets
 
+        k = 'placeholder_admin_fields'
+        if request.GET.get(k):
+            fields = request.GET[k].split(",")
+            return ((None, {'fields': fields}), )
+
         return super(PlaceholderAdmin, self).get_fieldsets(request, obj)
 
     def get_inline_instances(self, request, obj=None):
@@ -59,6 +64,10 @@ class PlaceholderAdmin(admin.ModelAdmin):
                 return [
                     inline(self.model, self.admin_site)
                     for inline in ph.inlines]
+
+        k = 'placeholder_admin_fields'
+        if request.GET.get(k):
+            return []
 
         return super(PlaceholderAdmin, self).get_inline_instances(request, obj)
 

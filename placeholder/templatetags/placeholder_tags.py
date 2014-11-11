@@ -80,9 +80,10 @@ class PlaceholderInstance(Tag):
     options = Options(
         Argument('instance', required=True),
         Argument('placeholder_admin', default=None, required=False),
+        Argument('fields', default="", required=False),
     )
 
-    def render_tag(self, context, instance, placeholder_admin):
+    def render_tag(self, context, instance, placeholder_admin, fields):
         if 'request' in context:
             user = context['request'].user
             perm = instance._meta.get_change_permission()
@@ -101,6 +102,7 @@ class PlaceholderInstance(Tag):
             'model_name': instance.__class__.__name__,
             'model_pk': instance.pk,
             'placeholder_admin': placeholder_admin,
+            'placeholder_admin_fields': fields,
             'admin_change_url': change_url
         })
         meta = escape(meta)
