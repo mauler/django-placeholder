@@ -20,11 +20,9 @@
                     $element.effect("highlight", 1000);
                 });
                 $(".placeholder-button").remove();
-                setTimeout(function () {
-                    $(function () {
-                        placeholders_init()
-                    });
-                }, 0);
+                imagesLoaded($updated, function(instance) {
+                    placeholders_init()
+                });
             }, "html");
         }
 
