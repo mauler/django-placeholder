@@ -1,7 +1,31 @@
 (function ($) {
+
+    function reposition_button($button) {
+        var $placeholder = $button.data("data-placeholder");
+        var offset = $placeholder.offset();
+        offset.left += $placeholder.width() - $button.width();
+        $button.css(offset);
+    }
+
+    function get_placeholder_button($placeholder, selector) {
+        var $button = $("#" + selector).clone();
+        $button.attr("id", null);
+        $button.addClass(selector);
+        $button.addClass("placeholder-button");
+        $button.data("data-placeholder", $placeholder);
+        reposition_button($button);
+        return $button;
+    }
+
     $(function () {
 
         window.__placeholder_multiedit = window.__placeholder_multiedit ? window.__placeholder_multiedit : false;
+
+        $(window).scroll(function () {
+            $(".placeholder-button").each(function () {
+                reposition_button($(this));
+            });
+        });
 
         function refresh (md5hash) {
             var url = location.href + "?__placeholder_expire_page=1";
@@ -56,14 +80,8 @@
                 var json = $this.attr("data-placeholder-field");
                 var meta = jQuery.parseJSON(json);
 
-                var $button = $("#placeholder-field-button").clone();
-                $button.attr("id", null);
-                $button.addClass("placeholder-field-button");
-                $button.addClass("placeholder-button");
-
-                var offset = $this.offset();
-                offset.left += $this.width() - $button.width();
-                $button.css(offset);
+                var $button = get_placeholder_button(
+                    $this, "placeholder-field-button");
 
                 $button.appendTo(document.body);
 
@@ -117,14 +135,8 @@
                 var json = $this.attr("data-placeholder-image");
                 var meta = jQuery.parseJSON(json);
 
-                var $button = $("#placeholder-image-button").clone();
-                $button.attr("id", null);
-                $button.addClass("placeholder-image-button");
-                $button.addClass("placeholder-button");
-
-                var offset = $this.offset();
-                offset.left += $this.width() - $button.width();
-                $button.css(offset);
+                var $button = get_placeholder_button(
+                    $this, "placeholder-image-button");
 
                 $button.show();
                 $button.appendTo(document.body);
@@ -182,10 +194,10 @@
                 var $this = $(this);
                 var json = $this.attr("data-placeholder-instance");
                 var meta = jQuery.parseJSON(json);
-                var $button = $("#placeholder-instance-button").clone();
-                $button.attr("id", null);
-                $button.addClass("placeholder-instance-button");
-                $button.addClass("placeholder-button");
+
+                var $button = get_placeholder_button(
+                    $this, "placeholder-instance-button");
+
                 var url = meta.admin_change_url + '?_popup=1' +
                     '&placeholder_admin=' + meta.placeholder_admin +
                     '&placeholder_admin_fields=' + meta.placeholder_admin_fields;
@@ -193,8 +205,6 @@
                     'href': url
                 })
                 $button.show();
-                var offset = $this.offset();
-                $button.css(offset);
                 $button.appendTo(document.body);
                 $button.hover(function () {
                     $this.effect("highlight", 500);
