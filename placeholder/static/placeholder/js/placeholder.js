@@ -20,9 +20,11 @@
                     $element.effect("highlight", 1000);
                 });
                 $(".placeholder-button").remove();
-                $(function () {
-                    placeholders_init()
-                });
+                setTimeout(function () {
+                    $(function () {
+                        placeholders_init()
+                    });
+                }, 0);
             }, "html");
         }
 
@@ -47,7 +49,7 @@
                     $.post(url, params, function () {
                         $multiedit_button.hide();
                     })
-
+                    return false;
                 });
             }
 
@@ -105,6 +107,7 @@
                         original_text = meta['value'];
                         $button.hide();
                     })
+                    return false;
                 });
 
             });
@@ -156,8 +159,6 @@
                                 processData: false,
                                 contentType: false,
                                 success: function(data) {
-
-                                    console.debug(data);
 
                                     if (data == true) {
                                         refresh($ph.attr("data-placeholder-md5hash"));
