@@ -4,6 +4,21 @@ from .__init__ import world
 from .utils import expire_page
 
 
+def get_current_request():
+    return getattr(world, "request", None)
+
+
+def get_current_user():
+    request = get_current_request()
+    if request:
+        return getattr(request, "user", None)
+
+
+class WorldMiddleware(object):
+    def process_request(self, request):
+        world.request = request
+
+
 class MultiEditMiddleware(object):
 
     def process_request(self, request):

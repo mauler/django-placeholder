@@ -19,6 +19,17 @@ def register(modeladmin, placeholder, key=None):
 class PlaceholderAdmin(admin.ModelAdmin):
     registred_placeholders = {}
 
+    def _declared_fieldsets(self):
+        from .middleware import get_current_request
+        request = get_current_request()
+        if request is not None:
+            k = 'placeholder_admin_fields'
+            if request.GET.get(k):
+                fields = request.GET[k].split(",")
+                return ((None, {'fields': fields}), )
+        return super(PlaceholderAdmin, self)._declared_fieldsets()
+    declared_fieldsets = property(_declared_fieldsets)
+
     def get_form(self, request, obj=None, **kwargs):
         k = 'placeholder_admin'
         if request.GET.get(k):
