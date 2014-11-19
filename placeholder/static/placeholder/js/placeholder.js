@@ -62,7 +62,7 @@
                 $button.addClass("placeholder-button");
 
                 var offset = $this.offset();
-                offset.left += $this.width();
+                offset.left += $this.width() - $button.width();
                 $button.css(offset);
 
                 $button.appendTo(document.body);
@@ -122,7 +122,7 @@
                 $button.addClass("placeholder-button");
 
                 var offset = $this.offset();
-                offset.left += $this.width();
+                offset.left += $this.width() - $button.width();
                 $button.css(offset);
 
                 $button.show();
@@ -195,15 +195,11 @@
                 })
                 $button.show();
                 var offset = $this.offset();
-                offset.left += $this.width();
                 $button.css(offset);
-                // $button.appendTo(this);
                 $button.appendTo(document.body);
                 $button.hover(function () {
-                    // $this.effect("highlight", 500);
-                    $this.addClass("transparent");
+                    $this.effect("highlight", 500);
                 }, function () {
-                    $this.removeClass("transparent");
                 });
                 $button.fancybox({
                     // autoScale: false,
