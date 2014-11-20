@@ -7,6 +7,12 @@
         $button.css(offset);
     }
 
+    function reposition_all_button() {
+        $(".placeholder-button").each(function () {
+            reposition_button($(this));
+        });
+    }
+
     function get_placeholder_button($placeholder, selector) {
         var $button = $("#" + selector).clone();
         $button.attr("id", null);
@@ -22,9 +28,7 @@
         window.__placeholder_multiedit = window.__placeholder_multiedit ? window.__placeholder_multiedit : false;
 
         $(window).scroll(function () {
-            $(".placeholder-button").each(function () {
-                reposition_button($(this));
-            });
+            reposition_all_button();
         });
 
         function refresh (md5hash) {
@@ -108,6 +112,7 @@
                     else {
                         if (get_text() != original_text) {
                             $button.show();
+                            reposition_all_button();
                         }
                         else {
                             $button.hide();
