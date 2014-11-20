@@ -3,7 +3,17 @@
     function reposition_button($button) {
         var $placeholder = $button.data("data-placeholder");
         var offset = $placeholder.offset();
-        offset.left += $placeholder.width() - $button.width();
+        var boffset = $button.data("data-button-offset");
+        var selector = $button.data("data-button-selector");
+        var boffset = {
+            top: 0,
+            left: 0,
+        };
+        if (selector == 'placeholder-instance-button') {
+            boffset.top -= $button.height();
+        }
+        offset.left += $placeholder.width() + boffset.left;
+        offset.top += boffset.top;
         $button.css(offset);
     }
 
@@ -19,6 +29,9 @@
         $button.addClass(selector);
         $button.addClass("placeholder-button");
         $button.data("data-placeholder", $placeholder);
+        $button.data("data-button-selector", selector);
+        $button.appendTo(document.body);
+        $button.show();
         reposition_button($button);
         return $button;
     }
@@ -87,7 +100,7 @@
                 var $button = get_placeholder_button(
                     $this, "placeholder-field-button");
 
-                $button.appendTo(document.body);
+                $button.hide();
 
                 var get_text = function () {
                     return $this.text().replace(/^\s*/, "").replace(/\s*$/, "");
@@ -142,9 +155,6 @@
 
                 var $button = get_placeholder_button(
                     $this, "placeholder-image-button");
-
-                $button.show();
-                $button.appendTo(document.body);
 
                 $button.click(function () {
                     var $form = $("#__placeholder_form");
@@ -209,8 +219,6 @@
                 $button.attr({
                     'href': url
                 })
-                $button.show();
-                $button.appendTo(document.body);
                 $button.hover(function () {
                     $this.effect("highlight", 500);
                 }, function () {
