@@ -1,6 +1,6 @@
-#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
+from django.conf import settings
 from django.contrib import admin
 
 from polymorphic.admin import \
@@ -11,7 +11,7 @@ import placeholder
 from .. import PlaceholderAdmin
 from .models import Slot, Portlet, SlotPortlet
 
-
+GRAPPELLI_INSTALLED = 'grappelli' in settings.INSTALLED_APPS
 PORTLETADMINS = []
 
 
@@ -32,11 +32,13 @@ class PortletAdmin(PolymorphicChildModelAdmin):
 class MainPortletAdmin(PolymorphicParentModelAdmin):
     base_model = Portlet
     change_list_filter_template = "admin/filter_listing.html"
-    change_list_template = "admin/change_list_filter_sidebar.html"
     list_display = ("id", "title", "polymorphic_ctype", )
     list_display_links = ("id", "title", )
     ordering = ("-id", )
     search_fields = ("title", )
+
+    if GRAPPELLI_INSTALLED:
+        change_list_template = "admin/change_list_filter_sidebar.html"
 
     def get_child_models(self):
         return PORTLETADMINS

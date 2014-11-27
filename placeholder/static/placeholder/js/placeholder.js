@@ -3,17 +3,13 @@
     function reposition_button($button) {
         var $placeholder = $button.data("data-placeholder");
         var offset = $placeholder.offset();
-        var boffset = $button.data("data-button-offset");
         var selector = $button.data("data-button-selector");
-        var boffset = {
-            top: 0,
-            left: 0,
-        };
         if (selector == 'placeholder-instance-button') {
-            boffset.top -= $button.height();
+            offset.top -= $button.height();
         }
-        offset.left += $placeholder.width() + boffset.left;
-        offset.top += boffset.top;
+        if ($placeholder.attr("data-placeholder-button-align") != "left") {
+            offset.left += $placeholder.width();
+        }
         $button.css(offset);
     }
 

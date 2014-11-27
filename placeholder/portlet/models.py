@@ -37,7 +37,7 @@ class Item(models.Model):
     portlet = models.ForeignKey("EasyPortlet")
     title = models.CharField(max_length=100)
     json_data = models.TextField()
-    position = models.PositiveIntegerField()
+    position = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ("portlet", "position", "title", )

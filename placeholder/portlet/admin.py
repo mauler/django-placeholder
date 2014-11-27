@@ -1,5 +1,6 @@
 from functools import partial
 
+from django.conf import settings
 from django.contrib.admin.util import flatten_fieldsets
 from django.contrib import admin
 from django.forms.models import inlineformset_factory
@@ -14,6 +15,9 @@ from .utils import \
     get_form_declaration
 
 
+GRAPPELLI_INSTALLED = 'grappelli' in settings.INSTALLED_APPS
+
+
 class InlineModelForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
@@ -24,7 +28,8 @@ class InlineModelForm(forms.ModelForm):
             kwargs['initial'] = initial
 
         super(InlineModelForm, self).__init__(*args, **kwargs)
-        self.fields['position'].widget = forms.HiddenInput()
+        if GRAPPELLI_INSTALLED:
+            self.fields['position'].widget = forms.HiddenInput()
 
     def save(self, commit=True):
         obj = super(InlineModelForm, self).save(commit)
