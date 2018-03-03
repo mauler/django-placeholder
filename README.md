@@ -5,9 +5,7 @@ django-placeholder
 
 [![Code Health](https://landscape.io/github/mauler/django-placeholder/master/landscape.png)](https://landscape.io/github/mauler/django-placeholder/master)
 
-[![Latest PyPI version](https://img.shields.io/pypi/v/django-placeholder.svg
-
-[![Number of PyPI downloads](https://img.shields.io/pypi/dm/django-placeholder.svg
+[![Latest PyPI version](https://img.shields.io/pypi/v/django-placeholder.svg)](https://crate.io/packages/django-placeholder/)
 
 Yes, another project to create placeholders (inline editable content). The goal of this project is to be a simple (and stupid) tool to use placeholders on your project. It uses the default `django admin` (compatible with grappelli, suit and others) so you can reuse everything from admin. (forms, fields, widgets...)
 
